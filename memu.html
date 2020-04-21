@@ -58,27 +58,17 @@
         /*set up instructions block*/
         var instructions = {
           type: "html-keyboard-response",
-          stimulus: "<p>In this task, you will see five arrows on the screen either in black or blue colors, like the examples below.</p>"+
-            
-            "<p>When arrows are in black color,</p>"+
-            "<img src='img/black.png'></img>"+
-            "<p>Press the left arrow key if the middle arrow is pointing left (<). </p>"+
-            "<p>Press the right arrow key if the middle arrow is pointing right (>). <br></p>"+
-
-            "<p><br>When arrows are in <b><font color='blue'>blue</font></b> color,</p>"+
-            "<img src='img/blue.png'></img>"+
-            "<p>Press the left arrow key if the arrows on each <u> side </u> of the center are pointing left. (<)</p>"+
-            "<p>Press the right arrow key if the arrows on each <u> side </u> of the center are pointing right. (>)</p>",
+          stimulus: "<p>In this task, you will see a few images and then you will be asked to select the ones that you saw earlier. It is a memory test."
           post_trial_gap: 1000
         };
 
-        /*set up welcome block*/
-        var lastOne = {
-          type: "html-keyboard-response",
-          stimulus: "<p>Summary: if arrows are in <b><font color='blue'>blue</font></b>, respond the direction of arrows on the <u>sides of</u> the center arrow; <br>if <b><font color='black'>black</font></b>, respond the direction of the <u>center</u> arrow. </p>"+
-            "<p>It will take around 2 minutes.<p>"+
-            "<p><br>Press any key to begin.</p>"
-        };
+        // /*set up welcome block*/
+        // var lastOne = {
+        //   type: "html-keyboard-response",
+        //   stimulus: "<p>Summary: if arrows are in <b><font color='blue'>blue</font></b>, respond the direction of arrows on the <u>sides of</u> the center arrow; <br>if <b><font color='black'>black</font></b>, respond the direction of the <u>center</u> arrow. </p>"+
+        //     "<p>It will take around 2 minutes.<p>"+
+        //     "<p><br>Press any key to begin.</p>"
+        // };
 
 
 
@@ -117,43 +107,6 @@
              data: { stim_type: 'incongruent', direction: 'right', attend: 'surround'}
            }
          ];
-
-/*        var test_stimuli = [
-          {
-            stimulus: "img/center_cong_left.png",
-            data: { stim_type: 'congruent', direction: 'left', attend: 'center'}
-          },
-          {
-            stimulus: "img/center_cong_right.png",
-            data: { stim_type: 'congruent', direction: 'right', attend: 'center'}
-          },
-          {
-            stimulus: "img/center_incong_right.png",
-            data: { stim_type: 'incongruent', direction: 'right', attend: 'center'}
-          },
-          {
-            stimulus: "img/center_incong_left.png",
-            data: { stim_type: 'incongruent', direction: 'left', attend: 'center'}
-          },
-          {
-            stimulus: "img/surround_cong_left.png",
-            data: { stim_type: 'congruent', direction: 'left', attend: 'surround'}
-          },
-          {
-            stimulus: "img/surround_cong_right.png",
-            data: { stim_type: 'congruent', direction: 'right', attend: 'surround'}
-          },
-          {
-            stimulus: "img/surround_incong_left.png",
-            data: { stim_type: 'incongruent', direction: 'left', attend: 'surround'}
-          },
-          {
-            stimulus: "img/surround_incong_right.png",
-            data: { stim_type: 'incongruent', direction: 'right', attend: 'surround'}
-          }
-        ];*/
-
-
 
         /* defining test timeline */
         var test = {
