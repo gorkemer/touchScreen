@@ -21,22 +21,55 @@
 <body></body>
 <script>
 
+var timeline = [];
+
+
+var testStimuli = [
+  {
+  stimulus: "img/balloon1.png",
+  },
+  stimulus: "img/balloon2.png",
+  {
+  stimulus: "img/balloon3.png",
+  },
+  {
+  stimulus: "img/balloon4.png",
+  },
+  {
+  stimulus: "img/balloon5.png",
+  },
+  {
+  stimulus: "img/balloon6.png",
+  },
+  {
+  stimulus: "img/balloon7.png",
+  },
+    {
+  stimulus: "img/balloon8.png",
+  },
+];
+
 
     var hello_trial = {
         type: 'image-button-response',
-        stimulus: 'img/ger1_tint.png',
+        stimulus: jsPsych.timelineVariable('stimulus'),
         button_html: '<img height ="200px" width="200px" src=%choice%></img>',
-        choices: [
-        'img/ger1.png',
-        'img/ger2.png'
-        ],
+        choices: ['img/pump.jpg'],
         margin_vertical: '50px',
         margin_horizontal: '50px'
     }
 
 
+var test_procedure = {
+        timeline: [hello_trial],
+        timeline_variables: testStimuli,
+        randomize_order: true
+}
+
+timeline.push(test_procedure);
+
   jsPsych.init({
-    timeline: [hello_trial],
+    timeline: timeline,
     on_finish: function() {
       jsPsych.data.displayData();
     }
