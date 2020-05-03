@@ -1,0 +1,129 @@
+
+  var animation_trial = {
+    type: 'animation',
+    stimuli: ['img/happy_face_1.jpg', 'img/happy_face_2.jpg', 'img/happy_face_3.jpg', 'img/happy_face_4.jpg'],
+    sequence_reps: 1,
+    frame_time: 300,
+    prompt: '<p>Watch the faces.</p>'
+  };
+
+
+var categorization_trial = {
+    type: 'categorize-image',
+    stimulus: 'img/gorkem_face.JPG',
+    key_answer: 71,
+    text_answer: 'Gryffindor',
+    choices: [71, 72, 82, 83],
+    correct_text: "<p class='prompt'>Correct! This person is a %ANS%.</p>",
+    incorrect_text: "<p class='prompt'>Incorrect. This person is a %ANS%.</p>",
+    prompt: "<p>Is this person a (G)ryffindor, (H)ufflepuff, (R)avenclaw, or (S)lytherin?</p>"
+};
+
+var sorting_stimuli = [];
+for (var i = 1; i <= 5; i++) {
+    sorting_stimuli.push("img/cell_img_" + i + ".png");
+}
+
+var sort_trial = {
+    type: 'free-sort',
+    stimuli: sorting_stimuli,
+    prompt: "<p>Click and drag the images below to sort them so that similar items are close together.</p>"
+};
+
+var button_trial = {
+    type: 'image-button-response',
+    stimulus: 'img/gorkem_face.JPG',
+    choices: ['Healthy', 'Unhealthy'],
+    prompt: "<p>Is this activity healthy or unhealthy?</p>"
+};
+
+var instruction_trial = {
+    type: 'instructions',
+    pages: [
+        'Welcome to the experiment. Click next to begin.',
+        'This is the second page of instructions.',
+        'This is the final page.'
+    ],
+    show_clickable_nav: true
+}
+
+
+var sample_function = function(param){
+    var size = 50 + Math.floor(param*250);
+    var html = '<div style="display: block; margin: auto; height: 300px;">'+
+    '<div style="display: block; margin: auto; background-color: #000000; '+
+    'width: '+size+'px; height: '+size+'px;"></div></div>';
+    return html;
+}
+
+var reconstruction_trial = {
+    type: 'reconstruction',
+    stim_function: sample_function,
+    starting_value: 0.25,
+    key_increase: 'y',
+    key_decrease: 'h',
+    button_label: "press y to increase, and h to decrease, then Countinue"
+}
+
+var inputs = {
+  type: 'resize',
+  item_width: 3 + 3/8,
+  item_height: 2 + 1/8,
+  prompt: "<p>Click and drag the lower right corner of the box until the box is the same size as a credit card held up to the screen.</p>",
+  pixels_per_unit: 150
+};
+
+  var same_different_trial = {
+    type: 'same-different-html',
+    stimuli: ['<p>Climbing</p>', '<p>Walking</p>'],
+    prompt: "<p>Press S if the texts imply the same amount of physical exertion. Press D if the texts imply different amount of physical exertion.</p>",
+    same_key: 'S',
+    different_key: 'D',
+    answer: 'different'
+  }
+
+var form_trial = {
+  type: 'survey-html-form',
+  preamble: '<p> How are you feeling <b>right now?</b> </p>',
+  html: '<p> I am feeling <input name="first" type="text" />, <input name="second" type="text" />, and <input name="third" type="text" />.</p>'
+};
+
+
+var multi_select_block = {
+    type: 'survey-multi-select',
+    questions: [
+      {
+        prompt: "Which of these colors do you like?", 
+        options: ["Red", "Yellow", "Green", "Blue", "Black"], 
+        horizontal: true,
+        required: true,
+        name: 'Colors'
+      }, 
+      {
+        prompt: "Which of these foods do you like?", 
+        options: ["Apples", "Bananas", "Carrots", "Donuts", "Eggplant"], 
+        horizontal: true,
+        required: true,
+        name: 'Foods'
+      }
+    ], 
+    randomize_question_order: true
+};
+
+
+var new_trial = {
+    type: 'survey-image-form',
+    stimulus: 'img/cell_img_1.png',
+    stimulus_height: 200,
+    stimulus_width: 200,
+    html: '<p> <input name="first" type="text" />, <br> <input name="second" type="text" />, <br> <input name="third" type="text" />, <br> <input name="fourth" type="text" />, <br><input name="fifth" type="text" />, <br> <input name="sixth" type="text" />, and <input name="seventh" type="text" />.</p>',
+    preamble: '<p> What can you do with that object?</b> </p>',
+    prompt: "<p>Is this activity healthy or unhealthy?</p>"
+};
+
+
+var form_trial = {
+  type: 'survey-html-form',
+  preamble: '<p> How are you feeling <b>right now?</b> </p>',
+  html: '<p> I am feeling <input name="first" type="text" />, <input name="second" type="text" />, and <input name="third" type="text" />.</p>'
+};
