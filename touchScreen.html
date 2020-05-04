@@ -24,46 +24,105 @@
 var timeline = [];
 
 
-var testStimuli = [
-  {
-  stimulus: "img/balloon1.png",
-  },
-  stimulus: "img/balloon2.png",
-  {
-  stimulus: "img/balloon3.png",
-  },
-  {
-  stimulus: "img/balloon4.png",
-  },
-  {
-  stimulus: "img/balloon5.png",
-  },
-  {
-  stimulus: "img/balloon6.png",
-  },
-  {
-  stimulus: "img/balloon7.png",
-  },
-    {
-  stimulus: "img/balloon8.png",
-  },
-];
 
+var balloon1 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
 
-    var hello_trial = {
-        type: 'image-button-response',
-        stimulus: jsPsych.timelineVariable('stimulus'),
-        button_html: '<img height ="200px" width="200px" src=%choice%></img>',
-        choices: ['img/pump.jpg'],
-        margin_vertical: '50px',
-        margin_horizontal: '50px'
+var balloon2 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon3 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon4 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon_trials = {
+    type: 'image-button-response',
+    button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+    choices: ['img/pump.jpg'],
+    timeline: [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"},
+    ],
+    conditional_function: function(){
+      var data1 = jsPsych.data.get().filter({name: 'patlak'}).values();
+      // if(data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('s')){
+      //   return false;
+      // } else {
+      //   return true;
+      // }
     }
+}
+
+var checkPatlak = jsPsych.data.get().filter({name: 'patlak'}).values()[0];
+
+
+// var testStimuli = [
+//   {stimulus: "img/balloon1.png"},
+//   {stimulus: "img/balloon2.png"},
+//   stimulus: "img/balloon3.png",
+//   },
+//   {
+//   stimulus: "img/balloon4.png",
+//   },
+//   {
+//   stimulus: "img/balloon5.png",
+//   },
+//   {
+//   stimulus: "img/balloon6.png",
+//   },
+//   {
+//   stimulus: "img/balloon7.png",
+//   },
+//     {
+//   stimulus: "img/balloon8.png",
+//   },
+// ];
+
+
+//     var hello_trial = {
+//         type: 'image-button-response',
+//         stimulus: jsPsych.timelineVariable('stimulus'),
+//         button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+//         choices: ['img/pump.jpg'],
+//         margin_vertical: '50px',
+//         margin_horizontal: '50px'
+//     }
 
 
 var test_procedure = {
-        timeline: [hello_trial],
-        timeline_variables: testStimuli,
-        randomize_order: true
+        timeline: [balloon_trials],
+        // timeline_variables: testStimuli,
+        // randomize_order: true
 }
 
 timeline.push(test_procedure);
