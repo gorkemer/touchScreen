@@ -1,0 +1,122 @@
+    conditional_function: function() {
+                var data = jsPsych.data.get().last(1).values()[0];
+                if (data.condType == 'feedback_after') {
+                        return true;
+                } else {
+                        return false;
+                }
+              },
+
+
+var balloon_trials = {
+    type: 'image-button-response',
+    button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+    choices: ['img/pump.jpg'],
+    stimulus: function(){
+          if(jsPsych.timelineVariable('same_modality',true) == 'face'){
+            var stimuli = jsPsych.randomization.sampleWithoutReplacement(face_stim,2)[0,1]}
+            
+            stimuli_pair.push(stimuli);
+            var stim1 = stimuli_pair[0];
+            var stim2 = stimuli_pair[1];
+            if(stimuli_pair[0].endsWith('jpg') == true){
+              return '<img src='+stim1+'/><img  src='+stim2+'/>'
+            }
+    }
+}
+
+
+
+var balloon_trials = {
+    type: 'image-button-response',
+    button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+    choices: ['img/pump.jpg'],
+    timeline: [
+        {stimulus: "img/balloon1.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon2.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon3.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon4.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon5.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon6.png", data: {name: 'noPatlak'}},
+    ],
+    conditional_function: function(){
+      var data1 = jsPsych.data.get().filter({name: 'patlak'}).values();
+       if(data1[0]== true){
+        
+         return false;
+       } else {
+        console.log('returned not true')
+         return true;
+      }
+    }
+}
+
+
+
+var balloon1 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon2 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon3 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+var balloon4 = [
+        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
+        {stimulus: "img/balloon2.png"},
+        {stimulus: "img/balloon3.png"},
+        {stimulus: "img/balloon4.png"},
+        {stimulus: "img/balloon5.png"},
+        {stimulus: "img/balloon6.png"}
+]
+
+// var testStimuli = [
+//   {stimulus: "img/balloon1.png"},
+//   {stimulus: "img/balloon2.png"},
+//   stimulus: "img/balloon3.png",
+//   },
+//   {
+//   stimulus: "img/balloon4.png",
+//   },
+//   {
+//   stimulus: "img/balloon5.png",
+//   },
+//   {
+//   stimulus: "img/balloon6.png",
+//   },
+//   {
+//   stimulus: "img/balloon7.png",
+//   },
+//     {
+//   stimulus: "img/balloon8.png",
+//   },
+// ];
+
+
+//     var hello_trial = {
+//         type: 'image-button-response',
+//         stimulus: jsPsych.timelineVariable('stimulus'),
+//         button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+//         choices: ['img/pump.jpg'],
+//         margin_vertical: '50px',
+//         margin_horizontal: '50px'
+//     }

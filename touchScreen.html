@@ -16,116 +16,159 @@
   <script src="../jspsych-6.0.5/plugins/jspsych-survey-html-form.js"></script>
   <script src="../jspsych-6.0.5/plugins/jspsych-survey-multi-select.js"></script>
   <script src="/animation/jspsych-survey-image-form.js"></script>
+  <script src="../jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="../jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
 
 </head>
 <body></body>
 <script>
 
 var timeline = [];
+var testStimuli = [];
+
+var if_trial = {
+    type: 'html-keyboard-response',
+    stimulus: 'Banked!'
+  }
+
+var splashTrial = {
+      type: "image-keyboard-response",
+      stimulus: "img/splash.png",
+      trial_duration: 1500
+    };
+
+var balloon_splash_procedure = {
+    timeline: [
+        {
+            type: 'html-keyboard-response',
+            stimulus: '+',
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 500
+        },
+
+        {
+            type: 'image-button-response',
+            button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+            choices: ['img/pump.jpg', 'img/bank.png'],
+            stimulus: jsPsych.timelineVariable('face'),
+            
+            on_start: function(trial) {
+            console.log('The trial is about to start.');
+            console.log(jsPsych.timelineVariable('last'))
+            if (jsPsych.timelineVariable('last') == "yes")
+              {trial.stimulus = 'img/splash.png'}
+            else {
+              console.log('check')
+            }
+            },
+            
+            on_finish: function (data) {
+                if (data.button_pressed == 1) {
+                  console.log(data.button_pressed)
+                    data.accuracy = 1
+                } else {
+                  console.log(data.button_pressed)
+                    data.accuracy = 0
+                }
+            } 
+        },
+
+      // if_node, conditional function 4 BANKED
+        {
+        timeline: [if_trial],
+        conditional_function: function () {
+              var lastButton = jsPsych.data.get().last(1).values()[0].accuracy; // get the data from two trials prior
+                if (lastButton == 0) {
+                  console.log(lastButton)
+                  return false;
+                } else {
+                  console.log(lastButton)
+                  return true;
+                }
+              },
+        trial_duration: 500
+        },
+      // // if_node, conditional function 4 SPLASH
+      //   {
+      //   timeline: [splashTrial],
+      //   conditional_function: function () {
+      //           var isItLast = jsPsych.timelineVariable('last')
+      //           if (isItLast == "no") {
+      //             console.log(isItLast)
+      //             return false;
+      //           } else {
+      //             console.log(isItLast)
+      //             return true;
+      //           }
+      //         },
+      //   trial_duration: 500
+      //   }
+    ],
+    
+    timeline_variables: [
+        { face: 'img/balloon1.png', last: "yes" },
+        { face: 'img/balloon2.png', last: "no" },
+        { face: 'img/balloon3.png', last: "no" },
+        { face: 'img/balloon4.png', last: "no" }
+    ],
+
+}
 
 
 
-var balloon1 = [
-        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
-        {stimulus: "img/balloon2.png"},
-        {stimulus: "img/balloon3.png"},
-        {stimulus: "img/balloon4.png"},
-        {stimulus: "img/balloon5.png"},
-        {stimulus: "img/balloon6.png"}
-]
+// on_finish: function(data){
+//                if(data.responses == '{\"Q0\":\"'+jsPsych.timelineVariable('answer', true)+'\"}'){
+//               data.correct = true;
+//            } else {
+//               data.correct = false;
+// on_finish: function(data){
+//     //   var responses = JSON.parse(data.responses);
+//     //   var code = responses.Q0;
 
-var balloon2 = [
-        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
-        {stimulus: "img/balloon2.png"},
-        {stimulus: "img/balloon3.png"},
-        {stimulus: "img/balloon4.png"},
-        {stimulus: "img/balloon5.png"},
-        {stimulus: "img/balloon6.png"}
-]
 
-var balloon3 = [
-        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
-        {stimulus: "img/balloon2.png"},
-        {stimulus: "img/balloon3.png"},
-        {stimulus: "img/balloon4.png"},
-        {stimulus: "img/balloon5.png"},
-        {stimulus: "img/balloon6.png"}
-]
+var balloon1 =[
+        {stimulus: "img/balloon1.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon2.png", data: {name: 'noPatlak'}},
+    ];
 
-var balloon4 = [
-        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
-        {stimulus: "img/balloon2.png"},
-        {stimulus: "img/balloon3.png"},
-        {stimulus: "img/balloon4.png"},
-        {stimulus: "img/balloon5.png"},
-        {stimulus: "img/balloon6.png"}
-]
+var balloon2 =[
+        {stimulus: "img/balloon1.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon2.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon3.png", data: {name: 'noPatlak'}},
+        {stimulus: "img/balloon4.png", data: {name: 'patlak'}},
+    ];
 
-var balloon_trials = {
+//testStimuli.push(balloon2);
+
+
+var balloon1_procedure = {
+    type: 'image-button-response',
+    button_html: '<img height ="200px" width="200px" src=%choice%></img>',
+    choices: ['img/pump.jpg', 'img/bank.png'],
+    stimulus: jsPsych.timelineVariable('stimulus')
+}
+
+var test_procedure1 = {
+        timeline: [balloon1_procedure],
+        timeline_variables: balloon1
+        //randomize_order: false
+}
+
+var balloon2_procedure = {
     type: 'image-button-response',
     button_html: '<img height ="200px" width="200px" src=%choice%></img>',
     choices: ['img/pump.jpg'],
-    timeline: [
-        {stimulus: "img/balloon1.png", data: {name: 'patlak'}},
-        {stimulus: "img/balloon2.png"},
-        {stimulus: "img/balloon3.png"},
-        {stimulus: "img/balloon4.png"},
-        {stimulus: "img/balloon5.png"},
-        {stimulus: "img/balloon6.png"},
-    ],
-    conditional_function: function(){
-      var data1 = jsPsych.data.get().filter({name: 'patlak'}).values();
-      // if(data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('s')){
-      //   return false;
-      // } else {
-      //   return true;
-      // }
-    }
+    stimulus: jsPsych.timelineVariable('stimulus')
 }
 
-var checkPatlak = jsPsych.data.get().filter({name: 'patlak'}).values()[0];
-
-
-// var testStimuli = [
-//   {stimulus: "img/balloon1.png"},
-//   {stimulus: "img/balloon2.png"},
-//   stimulus: "img/balloon3.png",
-//   },
-//   {
-//   stimulus: "img/balloon4.png",
-//   },
-//   {
-//   stimulus: "img/balloon5.png",
-//   },
-//   {
-//   stimulus: "img/balloon6.png",
-//   },
-//   {
-//   stimulus: "img/balloon7.png",
-//   },
-//     {
-//   stimulus: "img/balloon8.png",
-//   },
-// ];
-
-
-//     var hello_trial = {
-//         type: 'image-button-response',
-//         stimulus: jsPsych.timelineVariable('stimulus'),
-//         button_html: '<img height ="200px" width="200px" src=%choice%></img>',
-//         choices: ['img/pump.jpg'],
-//         margin_vertical: '50px',
-//         margin_horizontal: '50px'
-//     }
-
-
-var test_procedure = {
-        timeline: [balloon_trials],
-        // timeline_variables: testStimuli,
-        // randomize_order: true
+var test_procedure2 = {
+        timeline: [balloon2_procedure],
+        //timeline_variables: balloon2
+        //randomize_order: false
 }
 
-timeline.push(test_procedure);
+timeline.push(balloon_splash_procedure);
+//timeline.push(test_procedure1, splashTrial, test_procedure2, splashTrial);
 
   jsPsych.init({
     timeline: timeline,
