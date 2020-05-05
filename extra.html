@@ -1,4 +1,33 @@
-      
+            if (lastButton == 0) { //this means PUMP
+              var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne;
+              console.log("last stimulus is:", lastStimulus)
+                if (lastStimulus = "yes") {
+                  console.log("if (lastStimulus = 'yes'", lastStimulus)
+                  return true;
+              }
+              else if (lastButton == 1) {
+                console.log("else if (lastButton == 1)", lastStimulus)
+                return false;
+              }
+              else {
+                console.log("else")
+                return false;
+              }
+            } else {
+              console.log("first if's else")
+              return false
+            } 
+
+            if (lastButton == undefined) { //this means BANK
+              var lastStimulus = jsPsych.data.get().last(2).values()[0].lastOne;
+              if (lastStimulus = "yes") {
+                return true;
+              }
+              else {
+                return false;
+              },    
+
+
       // on_start: function(trial) {
       // console.log('The trial is about to start.');
       // console.log(jsPsych.timelineVariable('last'))

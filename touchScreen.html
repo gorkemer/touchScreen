@@ -42,15 +42,17 @@ var faceTrials = {
       },
       
       on_finish: function (data) {
+          var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne
           if (data.button_pressed == 1) {
             console.log('goes to bank')
             data.accuracy = 1
           } else {
             console.log('keeps going') // returns to bank
             data.accuracy = 0
+            data.deneme = lastStimulus
           }
-      } 
-  }
+        } 
+    }
 
 var if_quit_trial = {
       timeline: [quit_trial],
@@ -64,19 +66,18 @@ var if_quit_trial = {
             }
         },
       trial_duration: 500
-}
+};
 
 var if_outOfImage_trial = {
       timeline: [outOfImages_trial], // if_node, conditional if last:yes, present outOfImage_trial
       conditional_function: function () {
-        var lastButton = jsPsych.data.get().last(1).values()[0].accuracy;
-        var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne;
-            //if (lastStimulus == "no" || lastButton == 0) {
-            if (lastStimulus == "yes" || lastButton == 1) {
-              console.log("yes splash", lastStimulus)
-              return true;
-            } else {
-              console.log("no splash", lastStimulus)
+            var lastButton = jsPsych.data.get().last(1).values()[0].accuracy; // 0 if pressed pump, undefined if pressed bank
+            console.log("last button is:", lastButton)
+            var deneme = jsPsych.data.get().last(1).values()[0].deneme
+            if (lastButton == 0 && deneme == "yes") { //this means PUMP
+              return true
+            }
+              else {
               return false;
               }
             },
