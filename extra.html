@@ -1,3 +1,7 @@
+                        // var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne; // stimulus if pressed 0, undefined if pressed bank
+            //if (lastStimulus == "no" || lastButton == 0) {
+
+
             if (lastButton == 0) { //this means PUMP
               var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne;
               console.log("last stimulus is:", lastStimulus)
