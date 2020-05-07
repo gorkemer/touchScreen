@@ -17,12 +17,14 @@ var testStimuli = [];
 
 var quit_trial = {
     type: 'html-keyboard-response',
-    stimulus: 'quited!'
+    stimulus: 'quited!',
+    data: {firstTrial: false, banked: true}
   }
 var outOfImages_trial = {
       type: "image-keyboard-response",
       stimulus: "img/splash.png",
-      trial_duration: 1500
+      trial_duration: 1500,
+      data: {firstTrial: false}
     };
 
 var fixation = {
@@ -32,27 +34,54 @@ var fixation = {
       trial_duration: 500
     };
 
+var firstTrial = {
+      type: 'html-keyboard-response',
+      stimulus: 'O',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: 500,
+      data: {firstTrial: true, banked: false}
+    };
+
 var faceTrials = {
       type: 'image-button-response',
       button_html: '<img height ="200px" width="200px" src=%choice%></img>',
       choices: ['img/pump.jpg', 'img/bank.png'],
       stimulus: jsPsych.timelineVariable('face'),
-      data: {
-        lastOne: jsPsych.timelineVariable('last')
-      },
-      
+      data: {firstTrial: false, banked: false, isItLast: jsPsych.timelineVariable('last')},
       on_finish: function (data) {
-          var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne
-          if (data.button_pressed == 1) {
-            console.log('goes to bank')
-            data.accuracy = 1
-          } else {
-            console.log('keeps going') // returns to bank
-            data.accuracy = 0
-            data.deneme = lastStimulus
-          }
-        } 
-    }
+        var lastStimulus = jsPsych.data.get().last(1).values()[0].lastOne
+        if (data.button_pressed == 1) {
+          console.log('pressed bank')
+          data.accuracy = 1
+        } else {
+          console.log('pressed continue') 
+          data.accuracy = 0
+          data.deneme = lastStimulus
+        }
+      }
+}
+
+var faceCheck = {
+      timeline: [faceTrials],
+      conditional_function: function () {
+      var firstTrial = jsPsych.data.get().last(1).values()[0].firstTrial;
+      console.log("first trial check", firstTrial)
+      var checkBank = jsPsych.data.get().last(1).values()[0].banked; // get the data from two trials prior
+      console.log("neye basildi: ", checkBank)
+        
+        if (firstTrial){
+          return true
+        }
+        else if (checkBank == true) {
+          console.log("bank'e basildi (veya firstTrial), veya first trial gostermiyorum", checkBank)
+          return false
+        }
+        else {
+          console.log('showing balloon') //returns to bank
+          return true;
+        }
+      }
+}
 
 var if_quit_trial = {
       timeline: [quit_trial],
@@ -71,46 +100,44 @@ var if_quit_trial = {
 var if_outOfImage_trial = {
       timeline: [outOfImages_trial], // if_node, conditional if last:yes, present outOfImage_trial
       conditional_function: function () {
-            var lastButton = jsPsych.data.get().last(1).values()[0].accuracy; // 0 if pressed pump, undefined if pressed bank
-            console.log("last button is:", lastButton)
-            var deneme = jsPsych.data.get().last(1).values()[0].deneme
-            if (lastButton == 0 && deneme == "yes") { //this means PUMP
+            var isItLast = jsPsych.data.get().last(1).values()[0].isItLast; 
+            if (isItLast == true) { //this means PUMP
               return true
             }
               else {
               return false;
               }
             },
-      trial_duration: 500
+      trial_duration: 500,
 };
 
 
 var trial_obj1 = [
-  { face: 'img/balloon1.png', last: 'no'},
-  { face: 'img/balloon2.png', last: 'no'},
-  { face: 'img/balloon3.png', last: 'no'},
-  { face: 'img/balloon4.png', last: 'yes'} ];
+  { face: 'img/balloon1.png', last: false},
+  { face: 'img/balloon2.png', last: false},
+  { face: 'img/balloon3.png', last: false},
+  { face: 'img/balloon4.png', last: true} ];
 
 var trial_obj2 = [
-  { face: 'img/balloon1.png', last: 'no'},
-  { face: 'img/balloon2.png', last: 'no'},
-  { face: 'img/balloon3.png', last: 'yes'},
+  { face: 'img/balloon1.png', last: false},
+  { face: 'img/balloon2.png', last: false},
+  { face: 'img/balloon3.png', last: true},
   ];
 
 testStimuli.push(trial_obj1, trial_obj2)
 
 var trial1= {
-    timeline: [fixation, faceTrials, if_quit_trial, if_outOfImage_trial],
+    timeline: [faceCheck, if_quit_trial, if_outOfImage_trial],
     timeline_variables: testStimuli[0]
 };
 
 var trial2= {
-    timeline: [fixation, faceTrials,if_quit_trial, if_outOfImage_trial],
+    timeline: [faceCheck,if_quit_trial, if_outOfImage_trial],
     timeline_variables: testStimuli[1]
 };
 
 
-timeline.push(trial1, trial2);
+timeline.push(firstTrial, trial1, firstTrial, trial2);
 //timeline.push(test_procedure1, splashTrial, test_procedure2, splashTrial);
 
   jsPsych.init({
