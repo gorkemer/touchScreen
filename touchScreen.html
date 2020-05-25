@@ -8,12 +8,22 @@
   <script src="../jspsych-6.0.5/plugins/jspsych-image-button-response.js"></script>
   <script src="../jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js"></script>
   <script src="../jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="../jspsych-6.0.5/plugins/jspsych-instructions.js"></script>
 </head>
 <body></body>
 <script>
 
 var timeline = [];
 var testStimuli = [];
+
+var instructions = {
+  type: "instructions",
+  pages: [ "<p> You'll need to put many balloons as possible in the 'bank'.</p>"+ "<p>The bigger the ballon the better. You can pump the balloon by pressing the 'pump looking' button on the screen.</p>" + "<p> <br> Try not to inflate too much. Press next when ready. </p>"
+    ],
+    show_clickable_nav:true
+};
+
+timeline.push(instructions);
 
 var quit_trial = {
     type: 'html-keyboard-response',
