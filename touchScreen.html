@@ -17,7 +17,7 @@ var testStimuli = [];
 
 var quit_trial = {
     type: 'html-keyboard-response',
-    stimulus: 'quited!',
+    stimulus: 'banked!',
     data: {firstTrial: false, banked: true}
   }
 var outOfImages_trial = {
@@ -124,7 +124,17 @@ var trial_obj2 = [
   { face: 'img/balloon3.png', last: true},
   ];
 
-testStimuli.push(trial_obj1, trial_obj2)
+var trial_obj3 = [
+  { face: 'img/balloon1.png', last: false},
+  { face: 'img/balloon2.png', last: true}];
+
+var trial_obj4 = [
+  { face: 'img/balloon1.png', last: false},
+  { face: 'img/balloon2.png', last: false},
+  { face: 'img/balloon3.png', last: false},
+  { face: 'img/balloon4.png', last: true} ];
+
+testStimuli.push(trial_obj1, trial_obj2, trial_obj3, trial_obj4)
 
 var trial1= {
     timeline: [faceCheck, if_quit_trial, if_outOfImage_trial],
@@ -136,8 +146,17 @@ var trial2= {
     timeline_variables: testStimuli[1]
 };
 
+var trial3= {
+    timeline: [faceCheck,if_quit_trial, if_outOfImage_trial],
+    timeline_variables: testStimuli[2]
+};
 
-timeline.push(firstTrial, trial1, firstTrial, trial2);
+var trial4= {
+    timeline: [faceCheck,if_quit_trial, if_outOfImage_trial],
+    timeline_variables: testStimuli[3]
+};
+
+timeline.push(firstTrial, trial1, firstTrial, trial2, firstTrial, trial3, firstTrial, trial4);
 //timeline.push(test_procedure1, splashTrial, test_procedure2, splashTrial);
 
   jsPsych.init({
